@@ -1,6 +1,6 @@
 import jwt
 import json
-from ..models import db,UsersModel
+from ..models import db, UsersModel
 import datetime
 from instance.config import secret
 
@@ -13,15 +13,16 @@ def registerUser(data):
     status = UsersModel.query.filter(UsersModel.email == email).first()
 
     if status is None:
-        user = UsersModel(name=name,email=email,password=password)
+        user = UsersModel(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
 
-        return json.dumps({"error":False,"message":"Registered Successfully"})    
+        return json.dumps({"error": False, "message": "Registered Successfully"})
     else:
-        return json.dumps({"error":True,"message":"Email already exists"})
+        return json.dumps({"error": True, "message": "Email already exists"})
 
     return "Success"
+
 
 def loginUser(data):
     email = data["email"]
@@ -30,17 +31,17 @@ def loginUser(data):
     status = UsersModel.query.filter(UsersModel.email == email).first()
 
     if status is None:
-        return json.dumps({"error":True,"message":"Email doesn't exist"})
+        return json.dumps({"error": True, "message": "Email doesn't exist"})
     else:
         if status.password == password:
-            obj={
-                "email":email,
-                "created":str(datetime.datetime.utcnow()),
-                "expiry":str(datetime.datetime.utcnow()+datetime.timedelta(days=1))
+            obj = {
+                "email": email,
+                "created": str(datetime.datetime.utcnow()),
+                "expiry": str(datetime.datetime.utcnow()+datetime.timedelta(days=1))
             }
 
-            token = jwt.encode(obj,secret)
+            token = jwt.encode(obj, secret)
 
-            return json.dumps({"error":False,"token":token.decode(),"message":"Login Successfull"})
+            return json.dumps({"error": False, "token": token.decode(), "message": "Login Successfull"})
         else:
-            return json.dumps({"error":True,"message":"Wrong Password"})
+            return json.dumps({"error": True, "message": "Wrong Password"})
