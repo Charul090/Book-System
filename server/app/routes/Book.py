@@ -1,14 +1,20 @@
 from . import book
-from ..services.book import getBook, addBook, sendCategory
+from ..services.book import getBook, addBook, sendCategory, updateBook, sendBook
 from flask import request
 
 
 @book.route("/get")
 def get_book():
-    page = request.args.get("page",default=1,type=int)
+    page = request.args.get("page", default=1, type=int)
     data = getBook(page)
 
     return data
+
+
+@book.route("/<id>")
+def send_book(id):
+    response = sendBook(int(id))
+    return response
 
 
 @book.route("/add", methods=["GET", "POST"])
@@ -19,3 +25,12 @@ def add_book():
     else:
         response = sendCategory()
         return response
+
+
+@book.route("/update", methods=["GET", "POST"])
+def update_book():
+    if request.method == "POST":
+        response = updateBook(request.json, request.headers["Authorization"])
+    else:
+        pass
+    return response
