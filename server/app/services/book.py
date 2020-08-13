@@ -63,6 +63,7 @@ def addBook(data, token):
     price = data["price"]
     description = data["description"]
     quantity = data["quantity"]
+    author = data["author"]
 
     user = UsersModel.query.filter(UsersModel.email == token["email"]).first()
     user_id = user.id
@@ -72,7 +73,7 @@ def addBook(data, token):
     category_id = category_id.id
 
     book = BookModel(name=name, price=price, description=description,
-                     quantity=quantity, user_id=user_id, category=category_id)
+                     quantity=quantity, user_id=user_id, category=category_id,author=author)
 
     db.session.add(book)
     db.session.commit()
@@ -102,6 +103,7 @@ def updateBook(data, token):
     book.description = description
     book.category = category_id
     book.quantity = quantity
+    book.author = author
     db.session.commit()
 
     return json.dumps({"error": False, "message": "Book Updated Successfully"})
