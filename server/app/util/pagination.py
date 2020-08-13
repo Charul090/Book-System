@@ -1,7 +1,7 @@
 from math import ceil
 
 def pagination(page,data):
-    per_page = 15
+    per_page = 6
     total_pages = ceil(len(data)/per_page)
 
     if total_pages < page:
