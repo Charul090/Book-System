@@ -1,7 +1,7 @@
 import { SEND_LOGIN, LOGIN_SUCCESSFULL, LOGIN_FAILED, LOGOUT } from "./actiontypes.js"
 
 const initialState = {
-    login:false,
+    logged_user:false,
     fail:false,
     message:"",
     token:""
@@ -16,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
     case LOGIN_SUCCESSFULL:
         return {
             ...state,
-            login:true,
+            logged_user:true,
             token:payload.token,
             failed:false,
             message:payload.message
@@ -25,7 +25,7 @@ export default (state = initialState, { type, payload }) => {
     case LOGIN_FAILED:
         return{
             ...state,
-            login:false,
+            logged_user:false,
             token:"",
             failed:true,
             message:payload.message
