@@ -1,0 +1,11 @@
+.header{
+    width:80%;
+    display: flex;
+    justify-content: space-between;
+    margin:20px auto;
+}
+
+.container{
+    width:100%;
+    border-bottom: 1px solid lightgray;
+}

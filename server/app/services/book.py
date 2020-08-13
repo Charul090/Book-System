@@ -26,6 +26,7 @@ def getBook(page,token):
             CategoryModel.id == x.category).first()
         obj["category"] = category.category
         obj["author"] = x.author
+        obj["description"] = x.description
 
         data.append(obj)
     data, total_pages = pagination(page, data)
@@ -33,7 +34,9 @@ def getBook(page,token):
     if total_pages is None:
         return json.dumps({"error": True, "message": "Invalid page"})
 
-    return json.dumps({"error": False, "data": data, "total_pages": total_pages, "page": page})
+    category = sendCategory()
+
+    return json.dumps({"error": False, "data": data, "total_pages": total_pages, "page": page,"category":category})
 
 def sendBook(id):
     book = BookModel.query.filter(BookModel.id == id).first()
@@ -130,4 +133,4 @@ def sendCategory():
     for x in category:
         data.append(x.category)
 
-    return json.dumps({"error": False, "category": data})
+    return data

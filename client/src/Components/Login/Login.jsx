@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
+import {Redirect} from "react-router-dom"
 import styles from "./Login.module.css"
 import { Form, Button } from "react-bootstrap"
 import {Start_Login} from "../../Redux/login/action.js"
@@ -9,6 +10,7 @@ export default function Login() {
     const [password, setPassword] = useState("")
 
     let dispatch = useDispatch()
+    const {logged_user} = useSelector(state => state.login)
 
     const handleChange = (e) => {
         if (e.target.name === "email") {
@@ -28,7 +30,14 @@ export default function Login() {
         }
 
         dispatch(Start_Login(obj))
+    }
 
+    if(logged_user){
+        return (
+            <>
+                <Redirect to="/" />
+            </>
+        )
     }
 
     return (
