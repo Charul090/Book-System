@@ -67,6 +67,13 @@ export default function Add() {
         )
     }
 
+    if(!logged_user){
+        return (
+            <>
+                <Redirect to="/" />
+            </>
+        )
+    }
 
     return (
         <main>

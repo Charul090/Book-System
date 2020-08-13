@@ -42,6 +42,10 @@ export default function Home() {
         dispatch(Start_DELETE(id,token))
     }
 
+    const handleTitle =(id)=>{
+        history.push(`/book/${id}`)
+    }
+
     return (
         <main>
             <h1 style={{textAlign:"center"}}>Home</h1>
@@ -64,7 +68,7 @@ export default function Home() {
                                 return (
                                     <tr key={elem.id} id={elem.id}>
                                         <td>{elem.quantity}</td>
-                                        <td>{elem.name}</td>
+                                        <td onClick={()=>handleTitle(elem.id)}>{elem.name}</td>
                                         <td>{elem.price}</td>
                                         <td>{elem.author}</td>
                                         <td>{elem.category}</td>

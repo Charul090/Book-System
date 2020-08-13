@@ -9,7 +9,7 @@ import {Start_Update,RESET_UPDATE} from "../../Redux/update/action.js"
 export default function Update() {
     let { params } = useRouteMatch()
     const { data,category } = useSelector(state => state.book)
-    const {token} = useSelector(state => state.login)
+    const {token,logged_user} = useSelector(state => state.login)
     const {update} = useSelector(state => state.update)
 
     let [current_data,setCurrent] = useState(data.find((elem) => {
@@ -50,6 +50,14 @@ export default function Update() {
         return (
             <>
             <Redirect to="/" />
+            </>
+        )
+    }
+
+    if(!logged_user){
+        return (
+            <>
+                <Redirect to="/" />
             </>
         )
     }
