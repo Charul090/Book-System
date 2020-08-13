@@ -21,7 +21,7 @@ const DATA_FAILURE = (payload) => {
     }
 }
 
-const Start_Data = (data) => {
+const Start_Data = (data,page=1) => {
     return dispatch => {
         dispatch(SEND_DATA_DETAILS())
         axios({
@@ -30,6 +30,9 @@ const Start_Data = (data) => {
             url: "/book/get",
             headers:{
                 "Authorization":data
+            },
+            params:{
+                page
             }
         })
             .then((item) => item.data)

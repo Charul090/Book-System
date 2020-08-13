@@ -5,10 +5,11 @@ import styles from "./Home.module.css"
 import {Table} from "react-bootstrap"
 import {Start_Data} from "../../Redux/data/action.js"
 import {Start_DELETE,RESET_DELETE} from "../../Redux/delete/action.js"
+import Page from "../Page/Page.jsx"
 
 export default function Home() {
     const {logged_user,token} = useSelector(state => state.login)
-    const {data} = useSelector(state => state.book)
+    const {data,total_pages} = useSelector(state => state.book)
     const {update} = useSelector(state=>state.delete)
     let dispatch = useDispatch()
     let history = useHistory()
@@ -81,6 +82,12 @@ export default function Home() {
                     </tbody>
                     
                 </Table>
+                {
+                    total_pages > 1?
+                    <Page />
+                    :
+                    null
+                }
             </div>
         </main>
     )
