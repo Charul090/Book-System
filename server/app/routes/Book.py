@@ -1,5 +1,5 @@
 from . import book
-from ..services.book import getBook, addBook, sendCategory, updateBook, sendBook
+from ..services.book import getBook, addBook, sendCategory, updateBook, sendBook,deleteBook
 from flask import request
 
 
@@ -33,4 +33,9 @@ def update_book():
         response = updateBook(request.json, request.headers["Authorization"])
     else:
         pass
+    return response
+
+@book.route("/delete", methods=["POST"])
+def delete_book():
+    response = deleteBook(request.json, request.headers["Authorization"])
     return response
