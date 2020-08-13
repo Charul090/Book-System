@@ -95,6 +95,25 @@ def updateBook(data, token):
 
     return json.dumps({"error": False, "message": "Book Updated Successfully"})
 
+def deleteBook(data,token):
+    token = decodeToken(token)
+    id = data["id"]
+
+    if token is False:
+        return json.dumps({"message": "Token Expired", "error": True})
+
+    user = UsersModel.query.filter(UsersModel.email == token["email"]).first()
+    user_id = user.id
+
+    book = BookModel.query.filter(BookModel.id == data["id"],BookModel.user_id == user_id).first()
+
+    if book is None:
+        return json.dumps({"message": "Unauthorized access", "error": True})
+    
+    db.session.delete(book)
+    db.session.commit()
+    return json.dumps({"error": False, "message": "Book Deleted Successfully"})
+
 
 def sendCategory():
     category = CategoryModel.query.all()
