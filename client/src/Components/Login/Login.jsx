@@ -1,27 +1,41 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import styles from "./Login.module.css"
 import { Form, Button } from "react-bootstrap"
+import {Start_Login} from "../../Redux/login/action.js"
 
 export default function Login() {
-    const [email,setEmail] = useState("")
-    const [password,setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
-    const handleChange=(e)=>{
-        if(e.target.name === "email"){
+    let dispatch = useDispatch()
+
+    const handleChange = (e) => {
+        if (e.target.name === "email") {
             setEmail(e.target.value)
         }
-        else{
+        else {
             setPassword(e.target.value)
         }
     }
 
-    console.log(email,password)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        let obj ={
+            email,
+            password
+        }
+
+        dispatch(Start_Login(obj))
+
+    }
 
     return (
         <main>
             <div className={styles.container}>
                 <h1 style={{ textAlign: "center" }}>Login</h1>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control value={email} name="email" type="email" onChange={handleChange} placeholder="Enter email" />
