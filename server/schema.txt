@@ -1,0 +1,33 @@
+category;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| category | varchar(100) | YES  | UNI | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+
+
+book;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| id          | int           | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(100)  | YES  |     | NULL    |                |
+| price       | int           | YES  |     | NULL    |                |
+| category    | int           | YES  | MUL | NULL    |                |
+| description | varchar(1000) | YES  |     | NULL    |                |
+| quantity    | int           | YES  |     | NULL    |                |
+| user_id     | int           | YES  | MUL | NULL    |                |
+| author      | varchar(100)  | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+
+
+user;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| email    | varchar(100) | YES  | UNI | NULL    |                |
+| password | varchar(100) | YES  |     | NULL    |                |
+| name     | varchar(100) | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
