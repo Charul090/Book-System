@@ -1,0 +1,5 @@
+export const SEND_DELETE = "SEND_DELETE"
+export const DELETE_SUCCESSFULL = "DELETE_SUCCESSFULL"
+export const DELETE_FAILED = "DELETE_FAILED"
+
+export const RESET_DEL = "RESET_DEL"

@@ -4,10 +4,12 @@ import {useSelector,useDispatch} from "react-redux"
 import styles from "./Home.module.css"
 import {Table} from "react-bootstrap"
 import {Start_Data} from "../../Redux/data/action.js"
+import {Start_DELETE,RESET_DELETE} from "../../Redux/delete/action.js"
 
 export default function Home() {
     const {logged_user,token} = useSelector(state => state.login)
     const {data} = useSelector(state => state.book)
+    const {update} = useSelector(state=>state.delete)
     let dispatch = useDispatch()
     let history = useHistory()
 
@@ -16,6 +18,13 @@ export default function Home() {
             dispatch(Start_Data(token))
         }
     }, [])
+
+    useEffect(()=>{
+        if(update){
+            dispatch(Start_Data(token))
+            dispatch(RESET_DELETE())
+        }
+    },[update])
 
     if(!logged_user){
         return (
@@ -29,9 +38,13 @@ export default function Home() {
         history.push(`/update/${id}`)
     }
 
+    const handleDelete = (id)=>{
+        dispatch(Start_DELETE(id,token))
+    }
+
     return (
         <main>
-            <h1>Home</h1>
+            <h1 style={{textAlign:"center"}}>Home</h1>
             <div className={styles.container}>
                 <Table>
                     <thead>
@@ -56,7 +69,7 @@ export default function Home() {
                                         <td>{elem.author}</td>
                                         <td>{elem.category}</td>
                                         <td className={styles.update} onClick={()=>handleUpdate(elem.id)}>Update</td>
-                                        <td className={styles.update}>Delete</td>
+                                        <td className={styles.update} onClick={()=>handleDelete(elem.id)}>Delete</td>
                                     </tr>
                                 )
                             })
