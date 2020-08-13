@@ -4,6 +4,7 @@ import Home from '../Components/Home/Home'
 import Login from '../Components/Login/Login'
 import Register from '../Components/Register/Register'
 import Update from '../Components/Update/Update'
+import Add from '../Components/Add/Add'
 
 export default function Routes() {
     return (
@@ -11,6 +12,7 @@ export default function Routes() {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/add" component={Add} />
             <Route path="/update/:id" component={Update} />
         </Switch>
     )
