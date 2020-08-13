@@ -6,7 +6,7 @@ from flask import request
 @book.route("/get")
 def get_book():
     page = request.args.get("page", default=1, type=int)
-    data = getBook(page)
+    data = getBook(page,request.headers["Authorization"])
 
     return data
 

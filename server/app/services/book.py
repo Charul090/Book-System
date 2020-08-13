@@ -4,8 +4,16 @@ from ..util.token import decodeToken
 from ..util.pagination import pagination
 
 
-def getBook(page):
-    data_query = BookModel.query.all()
+def getBook(page,token):
+    token = decodeToken(token)
+
+    if token is False:
+        return json.dumps({"message": "Token Expired", "error": True})
+    
+    user = UsersModel.query.filter(UsersModel.email == token["email"]).first()
+    user_id = user.id
+
+    data_query = BookModel.query.filter(BookModel.user_id == user_id).all()
     data = []
 
     for x in data_query:
