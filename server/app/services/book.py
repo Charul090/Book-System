@@ -9,23 +9,38 @@ def getBook(page):
     data = []
 
     for x in data_query:
-        obj={}
+        obj = {}
         obj["id"] = x.id
         obj["name"] = x.name
         obj["price"] = x.price
         obj["quantity"] = x.quantity
-        category = CategoryModel.query.filter(CategoryModel.id == x.category).first()
+        category = CategoryModel.query.filter(
+            CategoryModel.id == x.category).first()
         obj["category"] = category.category
         obj["author"] = x.author
 
         data.append(obj)
-    data, total_pages = pagination(page,data)
+    data, total_pages = pagination(page, data)
 
     if total_pages is None:
         return json.dumps({"error": True, "message": "Invalid page"})
 
     return json.dumps({"error": False, "data": data, "total_pages": total_pages, "page": page})
 
+def sendBook(id):
+    book = BookModel.query.filter(BookModel.id == id).first()
+    obj = {}
+    obj["id"] = book.id
+    obj["name"] = book.name
+    obj["price"] = book.price
+    obj["quantity"] = book.quantity
+    category = CategoryModel.query.filter(
+        CategoryModel.id == book.category).first()
+    obj["category"] = category.category
+    obj["author"] = book.author
+    obj["description"] = book.description
+
+    return json.dumps({"error":False,"data":obj})
 
 def addBook(data, token):
     token = decodeToken(token)
@@ -52,6 +67,33 @@ def addBook(data, token):
     db.session.commit()
 
     return json.dumps({"error": False, "message": "Book Added Successfully"})
+
+
+def updateBook(data, token):
+    token = decodeToken(token)
+
+    if token is False:
+        return json.dumps({"message": "Token Expired", "error": True})
+
+    name = data["name"]
+    price = data["price"]
+    description = data["description"]
+    quantity = data["quantity"]
+    author = data["author"]
+
+    category_id = CategoryModel.query.filter(
+        CategoryModel.category == data["category"]).first()
+    category_id = category_id.id
+
+    book = BookModel.query.filter(BookModel.id == data["id"]).first()
+    book.name = name
+    book.price = price
+    book.description = description
+    book.category = category_id
+    book.quantity = quantity
+    db.session.commit()
+
+    return json.dumps({"error": False, "message": "Book Updated Successfully"})
 
 
 def sendCategory():
