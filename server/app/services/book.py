@@ -1,12 +1,30 @@
 import json
 from ..models import db, BookModel, UsersModel, CategoryModel
 from ..util.token import decodeToken
+from ..util.pagination import pagination
 
 
 def getBook(page):
-    data = BookModel.query.all()
+    data_query = BookModel.query.all()
+    data = []
 
-    
+    for x in data_query:
+        obj={}
+        obj["id"] = x.id
+        obj["name"] = x.name
+        obj["price"] = x.price
+        obj["quantity"] = x.quantity
+        category = CategoryModel.query.filter(CategoryModel.id == x.category).first()
+        obj["category"] = category.category
+        obj["author"] = x.author
+
+        data.append(obj)
+    data, total_pages = pagination(page,data)
+
+    if total_pages is None:
+        return json.dumps({"error": True, "message": "Invalid page"})
+
+    return json.dumps({"error": False, "data": data, "total_pages": total_pages, "page": page})
 
 
 def addBook(data, token):
